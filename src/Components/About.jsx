@@ -3,7 +3,7 @@ import axios from "axios";
 import "./Home.css";
 
 const About = () => {
-  const [pages, setPages] = useState([]);
+  const [page, setPage] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
@@ -11,7 +11,14 @@ const About = () => {
     axios
       .get("https://soma.rkmvivekatirtha.org/wp-json/wp/v2/pages?_embed")
       .then((response) => {
-        setPages(response.data);
+        const aboutPage = response.data.find(
+          (page) => page.slug === "about-us"
+        );
+        if (aboutPage) {
+          setPage(aboutPage);
+        } else {
+          setError("Page not found.");
+        }
         setLoading(false);
       })
       .catch((error) => {
@@ -23,32 +30,26 @@ const About = () => {
 
   if (loading) return <div className="loading">Loading...</div>;
   if (error) return <div className="error">{error}</div>;
+
+  const featuredMedia =
+    page._embedded &&
+    page._embedded["wp:featuredmedia"] &&
+    page._embedded["wp:featuredmedia"][0];
+  const imageUrl = featuredMedia?.source_url;
+
   return (
     <div className="home-container">
-     
-      <section className="">
-        {pages.map((page) => {
-          const featuredMedia =
-            page._embedded &&
-            page._embedded["wp:featuredmedia"] &&
-            page._embedded["wp:featuredmedia"][0];
-          const imageUrl = featuredMedia?.source_url;
-
-          return (
-            <article key={"page.id"}>
-              {imageUrl && (
-                <img src={imageUrl} alt={page.title.rendered} />
-              )}
-              <div>
-                <h2 dangerouslySetInnerHTML={{ __html: page.title.rendered }}/>
-               <div dangerouslySetInnerHTML={{ __html: page.content.rendered}}/>
-              </div>
-            </article>
-          );
-        })}
+      <section>
+        <article>
+          {imageUrl && <img src={imageUrl} alt={page.title.rendered} />}
+          <div>
+            <h2 dangerouslySetInnerHTML={{ __html: page.title.rendered }} />
+            <div dangerouslySetInnerHTML={{ __html: page.content.rendered }} />
+          </div>
+        </article>
       </section>
     </div>
-  )
-}
+  );
+};
 
-export default About
+export default About;
