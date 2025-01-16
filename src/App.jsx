@@ -5,7 +5,7 @@ import NewsDeatils from './Components/NewsDetails'
 import About from './Components/About'
 import Footer from './Components/Footer'
 import Contact from './Components/Contact'
-import PostsByCategory from './Components/PostsByCategory'
+import CategoryDetails from './Components/CategoryDetails'
 import "./App.css";
 const App = () => {
   return (
@@ -32,9 +32,8 @@ const App = () => {
         <Route path='/' element={<Home/>}/>
         <Route path='/about-us' element={<About/>}/>
         <Route path='/contact-us' element={<Contact/>}/>
-        <Route path='/news/:id' element={<NewsDeatils/>}/>
-        <Route path='/category/:id' element={<PostsByCategory/>}/>
-      
+      <Route path='/news/:id' element={<NewsDeatils/>}/>
+      <Route path='/category/:id' element={<CategoryDetails/>}/>
       </Routes>
       </main>
       <Footer/>
