@@ -5,13 +5,15 @@ import NewsDeatils from './Components/NewsDetails'
 import About from './Components/About'
 import Footer from './Components/Footer'
 import Contact from './Components/Contact'
+import PostsByCategory from './Components/PostsByCategory'
 import "./App.css";
 const App = () => {
   return (
     <Router>
     <div className="app-container">
       <header className="app-header">
-        <h1 className="app-title">News Application</h1>
+      <div className='Logo'><img src='../assets/images/Logo.png'/></div>
+        {/* <h1 className="app-title">News Application</h1> */}
         <nav className="app-nav">
           <NavLink to="/" className={({isActive})=>isActive?"nav-link active":"nav-link"} end>
           Home
@@ -30,7 +32,8 @@ const App = () => {
         <Route path='/' element={<Home/>}/>
         <Route path='/about-us' element={<About/>}/>
         <Route path='/contact-us' element={<Contact/>}/>
-      {/* <Route path='/news/:id' element={<NewsDeatils/>}/> */}
+        <Route path='/news/:id' element={<NewsDeatils/>}/>
+        <Route path='/category/:id' element={<PostsByCategory/>}/>
       
       </Routes>
       </main>
